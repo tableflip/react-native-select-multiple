@@ -1,4 +1,4 @@
-# react-native-select-multiple
+# react-native-select-multiple [![dependencies Status](https://david-dm.org/tableflip/react-native-select-multiple/status.svg)](https://david-dm.org/tableflip/react-native-select-multiple)
 
 A customiseable ListView that allows you to select multiple rows.
 
