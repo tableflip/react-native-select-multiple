@@ -46,7 +46,7 @@ export default class SelectMultiple extends Component {
     checkboxCheckedStyle: {},
     labelStyle: {},
     checkboxSource: checkbox,
-    checkboxCheckedSource: checkboxChecked
+    selectedCheckboxSource: checkboxChecked
   }
 
   constructor (props) {
@@ -67,9 +67,9 @@ export default class SelectMultiple extends Component {
     this.setState({ dataSource })
   }
 
-  getRowData ({ items, selectedItems = [] }) {
+  getRowData ({ items, selectedItems }) {
     items = items.map(this.toLabelValueObject)
-    selectedItems = selectedItems.map(this.toLabelValueObject)
+    selectedItems = (selectedItems || []).map(this.toLabelValueObject)
 
     items.forEach((item) => {
       item.selected = selectedItems.some((i) => i.value === item.value)
