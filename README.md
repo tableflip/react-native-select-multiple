@@ -2,6 +2,8 @@
 
 A customiseable ListView that allows you to select multiple rows.
 
+![select-multiple](https://cloud.githubusercontent.com/assets/152863/20929245/3569a3c6-bbc1-11e6-9d80-7f13e4c532c5.gif)
+
 ## Example
 
 ```js
