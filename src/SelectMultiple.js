@@ -67,16 +67,15 @@ export default class SelectMultiple extends Component {
     this.setState({ dataSource })
   }
 
-  getRowData ({ items, selectedItems }) {
-    return items.map((item) => {
-      const selected = selectedItems.some((i) => i === item)
+  getRowData ({ items, selectedItems = [] }) {
+    items = items.map(this.toLabelValueObject)
+    selectedItems = selectedItems.map(this.toLabelValueObject)
 
-      if (Object.prototype.toString.call(item) === '[object String]') {
-        return { label: item, value: item, selected }
-      } else {
-        return { label: item.label, value: item.value, selected }
-      }
+    items.forEach((item) => {
+      item.selected = selectedItems.some((i) => i.value === item.value)
     })
+
+    return items
   }
 
   onRowPress (row) {
@@ -84,14 +83,7 @@ export default class SelectMultiple extends Component {
 
     let { selectedItems } = this.props
 
-    // Map all to { label, value }
-    selectedItems = selectedItems.map((item) => {
-      if (Object.prototype.toString.call(item) === '[object String]') {
-        return { label: item, value: item }
-      } else {
-        return { label: item.label, value: item.value }
-      }
-    })
+    selectedItems = (selectedItems || []).map(this.toLabelValueObject)
 
     const index = selectedItems.findIndex((selectedItem) => selectedItem.value === row.value)
 
@@ -102,6 +94,14 @@ export default class SelectMultiple extends Component {
     }
 
     this.props.onSelectionsChange(selectedItems, row)
+  }
+
+  toLabelValueObject (obj) {
+    if (Object.prototype.toString.call(obj) === '[object String]') {
+      return { label: obj, value: obj }
+    } else {
+      return { label: obj.label, value: obj.value }
+    }
   }
 
   mergeStyles (styles1, styles2) {
