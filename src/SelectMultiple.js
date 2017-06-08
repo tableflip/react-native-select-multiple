@@ -4,10 +4,10 @@ import styles from './SelectMultiple.styles'
 import checkbox from '../images/icon-checkbox.png'
 import checkboxChecked from '../images/icon-checkbox-checked.png'
 
-const itemType = PropTypes.oneOfType(
+const itemType = PropTypes.oneOfType([
   PropTypes.string,
   PropTypes.shape({ label: PropTypes.string, value: PropTypes.any })
-)
+])
 
 const styleType = PropTypes.oneOfType([
   PropTypes.object,
