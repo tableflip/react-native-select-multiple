@@ -40,6 +40,54 @@ class App extends Component {
 }
 ```
 
+## Customize label
+
+```js
+import React, { Component } from 'react'
+import { View, Text, Image } from 'react-native'
+import SelectMultiple from 'react-native-select-multiple'
+
+const fruits = ['Apples', 'Oranges', 'Pears']
+// --- OR ---
+// const fruits = [
+//   { label: 'Apples', value: 'appls' },
+//   { label: 'Oranges', value: 'orngs' },
+//   { label: 'Pears', value: 'pears' }
+// ]
+
+const renderLabel = (label, style) => {
+  return (
+    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <Image style={{width: 42, height: 42}} source={{uri: 'https://dummyimage.com/100x100/52c25a/fff&text=S'}} />
+      <View style={{marginLeft: 10}}>
+        <Text style={style}>{label}</Text>
+      </View>
+    </View>
+  )
+}
+
+class App extends Component {
+  state = { selectedFruits: [] }
+
+  onSelectionsChange = (selectedFruits) => {
+    // selectedFruits is array of { label, value }
+    this.setState({ selectedFruits })
+  }
+
+  render () {
+    return (
+      <View>
+        <SelectMultiple
+          items={fruits}
+          renderLabel={renderLabel}
+          selectedItems={this.state.selectedFruits}
+          onSelectionsChange={this.onSelectionsChange} />
+      </View>
+    )
+  }
+}
+```
+
 ## Properties
 
 | Prop  | Default  | Type | Description |
@@ -56,6 +104,7 @@ class App extends Component {
 | selectedRowStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/view.html#style) for the row container when selected. |
 | selectedCheckboxStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/image.html#style) for the checkbox image when selected. |
 | selectedLabelStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/text.html#style) for the text label when selected. |
+| renderLabel | null | `func` | Function for render label. |
 
 ----
 
