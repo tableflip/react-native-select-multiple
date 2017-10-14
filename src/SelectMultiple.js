@@ -82,21 +82,20 @@ export default class SelectMultiple extends Component {
   }
 
   onRowPress (row) {
-    row = Object.assign({}, row)
-
+    const { label, value } = row
     let { selectedItems } = this.props
 
     selectedItems = (selectedItems || []).map(this.toLabelValueObject)
 
-    const index = selectedItems.findIndex((selectedItem) => selectedItem.value === row.value)
+    const index = selectedItems.findIndex((selectedItem) => selectedItem.value === value)
 
     if (index > -1) {
-      selectedItems = selectedItems.filter((selectedItem) => selectedItem.value !== row.value)
+      selectedItems = selectedItems.filter((selectedItem) => selectedItem.value !== value)
     } else {
-      selectedItems = selectedItems.concat(row)
+      selectedItems = selectedItems.concat({ label, value })
     }
 
-    this.props.onSelectionsChange(selectedItems, row)
+    this.props.onSelectionsChange(selectedItems, { label, value })
   }
 
   toLabelValueObject (obj) {
