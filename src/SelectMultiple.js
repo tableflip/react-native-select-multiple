@@ -29,6 +29,8 @@ export default class SelectMultiple extends Component {
     checkboxSource: sourceType,
     selectedCheckboxSource: sourceType,
 
+    listViewProps: PropTypes.any,
+    
     style: styleType,
     rowStyle: styleType,
     checkboxStyle: styleType,
@@ -113,9 +115,9 @@ export default class SelectMultiple extends Component {
 
   render () {
     const { dataSource } = this.state
-    const { style } = this.props
+    const { style, listViewProps } = this.props
     const { renderItemRow } = this
-    return <ListView style={style} dataSource={dataSource} renderRow={renderItemRow} />
+    return <ListView style={style} dataSource={dataSource} renderRow={renderItemRow} {...listViewProps}/>
   }
 
   renderItemRow = (row) => {
