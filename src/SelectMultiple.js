@@ -115,7 +115,12 @@ export default class SelectMultiple extends Component {
     const { dataSource } = this.state
     const { style } = this.props
     const { renderItemRow } = this
-    return <ListView style={style} dataSource={dataSource} renderRow={renderItemRow} />
+    return <ListView
+      style={style}
+      dataSource={dataSource}
+      renderRow={renderItemRow}
+      removeClippedSubviews={false}
+    />
   }
 
   renderItemRow = (row) => {
