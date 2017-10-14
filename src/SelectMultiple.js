@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { View, ListView, Text, TouchableWithoutFeedback, Image } from 'react-native'
 import styles from './SelectMultiple.styles'
 import checkbox from '../images/icon-checkbox.png'
