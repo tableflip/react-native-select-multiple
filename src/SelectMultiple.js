@@ -4,6 +4,7 @@ import { View, ListView, Text, TouchableWithoutFeedback, Image } from 'react-nat
 import styles from './SelectMultiple.styles'
 import checkbox from '../images/icon-checkbox.png'
 import checkboxChecked from '../images/icon-checkbox-checked.png'
+import { mergeStyles } from './style'
 
 const itemType = PropTypes.oneOfType([
   PropTypes.string,
@@ -106,12 +107,6 @@ export default class SelectMultiple extends Component {
     }
   }
 
-  mergeStyles (styles1, styles2) {
-    styles1 = styles1 == null ? [] : styles1
-    styles1 = Array.isArray(styles1) ? styles1 : [styles1]
-    return styles2 == null ? styles1 : styles1.concat(styles2)
-  }
-
   render () {
     const { dataSource } = this.state
     const { style, listViewProps } = this.props
@@ -133,8 +128,6 @@ export default class SelectMultiple extends Component {
       selectedCheckboxStyle,
       selectedLabelStyle
     } = this.props
-
-    const { mergeStyles } = this
 
     if (row.selected) {
       checkboxSource = selectedCheckboxSource

@@ -4,7 +4,7 @@
   "description": "A customiseable ListView that allows you to select multiple rows",
   "main": "src/SelectMultiple.js",
   "scripts": {
-    "test": "standard"
+    "test": "standard && tape test/*.test.js"
   },
   "keywords": [
     "select",
@@ -29,7 +29,9 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.0.1",
-    "standard": "^10.0.3"
+    "reify": "^0.12.3",
+    "standard": "^10.0.3",
+    "tape": "^4.8.0"
   },
   "standard": {
     "parser": "babel-eslint"
