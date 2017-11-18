@@ -140,9 +140,9 @@ export default class SelectMultiple extends Component {
 
     if (row.selected) {
       checkboxSource = selectedCheckboxSource
-      rowStyle = mergeStyles(mergeStyles(styles.row, rowStyle), selectedRowStyle)
-      checkboxStyle = mergeStyles(mergeStyles(styles.checkbox, checkboxStyle), selectedCheckboxStyle)
-      labelStyle = mergeStyles(mergeStyles(styles.label, labelStyle), selectedLabelStyle)
+      rowStyle = mergeStyles(styles.row, rowStyle, selectedRowStyle)
+      checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle, selectedCheckboxStyle)
+      labelStyle = mergeStyles(styles.label, labelStyle, selectedLabelStyle)
     } else {
       rowStyle = mergeStyles(styles.row, rowStyle)
       checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle)
