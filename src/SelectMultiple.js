@@ -1,8 +1,10 @@
-import React, { Component, PropTypes } from 'react'
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { View, ListView, Text, TouchableWithoutFeedback, Image } from 'react-native'
 import styles from './SelectMultiple.styles'
 import checkbox from '../images/icon-checkbox.png'
 import checkboxChecked from '../images/icon-checkbox-checked.png'
+import { mergeStyles } from './style'
 
 const itemType = PropTypes.oneOfType([
   PropTypes.string,
@@ -28,6 +30,7 @@ export default class SelectMultiple extends Component {
     checkboxSource: sourceType,
     selectedCheckboxSource: sourceType,
     renderLabel: PropTypes.func,
+    listViewProps: PropTypes.any,
     style: styleType,
     rowStyle: styleType,
     checkboxStyle: styleType,
@@ -80,21 +83,20 @@ export default class SelectMultiple extends Component {
   }
 
   onRowPress (row) {
-    row = Object.assign({}, row)
-
+    const { label, value } = row
     let { selectedItems } = this.props
 
     selectedItems = (selectedItems || []).map(this.toLabelValueObject)
 
-    const index = selectedItems.findIndex((selectedItem) => selectedItem.value === row.value)
+    const index = selectedItems.findIndex((selectedItem) => selectedItem.value === value)
 
     if (index > -1) {
-      selectedItems = selectedItems.filter((selectedItem) => selectedItem.value !== row.value)
+      selectedItems = selectedItems.filter((selectedItem) => selectedItem.value !== value)
     } else {
-      selectedItems = selectedItems.concat(row)
+      selectedItems = selectedItems.concat({ label, value })
     }
 
-    this.props.onSelectionsChange(selectedItems, row)
+    this.props.onSelectionsChange(selectedItems, { label, value })
   }
 
   toLabelValueObject (obj) {
@@ -105,17 +107,11 @@ export default class SelectMultiple extends Component {
     }
   }
 
-  mergeStyles (styles1, styles2) {
-    styles1 = styles1 == null ? [] : styles1
-    styles1 = Array.isArray(styles1) ? styles1 : [styles1]
-    return styles2 == null ? styles1 : styles1.concat(styles2)
-  }
-
   render () {
     const { dataSource } = this.state
-    const { style } = this.props
+    const { style, listViewProps } = this.props
     const { renderItemRow } = this
-    return <ListView style={style} dataSource={dataSource} renderRow={renderItemRow} />
+    return <ListView style={style} dataSource={dataSource} renderRow={renderItemRow} {...(listViewProps || {})} />
   }
 
   renderLabel = (label, style, selected) => {
@@ -141,8 +137,6 @@ export default class SelectMultiple extends Component {
       selectedCheckboxStyle,
       selectedLabelStyle
     } = this.props
-
-    const { mergeStyles } = this
 
     if (row.selected) {
       checkboxSource = selectedCheckboxSource
