@@ -8,7 +8,7 @@ import { mergeStyles } from './style'
 
 const itemType = PropTypes.oneOfType([
   PropTypes.string,
-  PropTypes.shape({ label: PropTypes.string, value: PropTypes.any })
+  PropTypes.shape({ label: PropTypes.any, value: PropTypes.any })
 ])
 
 const styleType = PropTypes.oneOfType([
@@ -29,9 +29,8 @@ export default class SelectMultiple extends Component {
 
     checkboxSource: sourceType,
     selectedCheckboxSource: sourceType,
-
+    renderLabel: PropTypes.func,
     listViewProps: PropTypes.any,
-
     style: styleType,
     rowStyle: styleType,
     checkboxStyle: styleType,
@@ -50,7 +49,8 @@ export default class SelectMultiple extends Component {
     checkboxCheckedStyle: {},
     labelStyle: {},
     checkboxSource: checkbox,
-    selectedCheckboxSource: checkboxChecked
+    selectedCheckboxSource: checkboxChecked,
+    renderLabel: null
   }
 
   constructor (props) {
@@ -114,6 +114,15 @@ export default class SelectMultiple extends Component {
     return <ListView style={style} dataSource={dataSource} renderRow={renderItemRow} {...(listViewProps || {})} />
   }
 
+  renderLabel = (label, style, selected) => {
+    if (this.props.renderLabel) {
+      return this.props.renderLabel(label, style, selected)
+    }
+    return (
+      <Text style={style}>{label}</Text>
+    )
+  }
+
   renderItemRow = (row) => {
     let {
       checkboxSource,
@@ -144,7 +153,7 @@ export default class SelectMultiple extends Component {
       <TouchableWithoutFeedback onPress={() => this.onRowPress(row)}>
         <View style={rowStyle}>
           <Image style={checkboxStyle} source={checkboxSource} />
-          <Text style={labelStyle}>{row.label}</Text>
+          {this.renderLabel(row.label, labelStyle, row.selected)}
         </View>
       </TouchableWithoutFeedback>
     )
