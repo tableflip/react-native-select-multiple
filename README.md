@@ -1,13 +1,18 @@
-# react-native-select-multiple [![dependencies Status](https://david-dm.org/tableflip/react-native-select-multiple/status.svg)](https://david-dm.org/tableflip/react-native-select-multiple)
+# react-native-select-multiple
 
-A customiseable ListView that allows you to select multiple rows.
+[![dependencies Status](https://david-dm.org/tableflip/react-native-select-multiple/status.svg)](https://david-dm.org/tableflip/react-native-select-multiple)
+
+> A customiseable ListView that allows you to select multiple rows.
 
 ![select-multiple](https://cloud.githubusercontent.com/assets/152863/20929245/3569a3c6-bbc1-11e6-9d80-7f13e4c532c5.gif)
 
-Steps of installation:
- $ npm install react-native-select-multiple --save
+## Install
 
-## Example
+```sh
+npm install react-native-select-multiple
+```
+
+## Usage
 
 ```js
 import React, { Component } from 'react'
