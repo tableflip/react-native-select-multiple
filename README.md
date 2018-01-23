@@ -115,6 +115,14 @@ class App extends Component {
 | selectedLabelStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/text.html#style) for the text label when selected. |
 | renderLabel | null | `func` | Function for render label. |
 
+## Contribute
+
+Feel free to dive in! [Open an issue](https://github.com/tableflip/react-native-select-multiple/issues/new) or submit PRs.
+
+## License
+
+[ISC](LICENSE) © TABLEFLIP
+
 ----
 
 A [(╯°□°）╯︵TABLEFLIP](https://tableflip.io) side project.
