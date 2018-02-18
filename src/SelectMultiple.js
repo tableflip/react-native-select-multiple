@@ -28,6 +28,7 @@ export default class SelectMultiple extends Component {
     onSelectionsChange: PropTypes.func.isRequired,
 
     checkboxSource: sourceType,
+    renderCustomCheckboxSource: PropTypes.func,
     selectedCheckboxSource: sourceType,
     renderLabel: PropTypes.func,
     listViewProps: PropTypes.any,
@@ -132,27 +133,33 @@ export default class SelectMultiple extends Component {
     } = this.props
 
     const {
+      renderCustomCheckboxSource,
       selectedCheckboxSource,
       selectedRowStyle,
       selectedCheckboxStyle,
       selectedLabelStyle
     } = this.props
 
-    if (row.selected) {
-      checkboxSource = selectedCheckboxSource
-      rowStyle = mergeStyles(styles.row, rowStyle, selectedRowStyle)
-      checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle, selectedCheckboxStyle)
-      labelStyle = mergeStyles(styles.label, labelStyle, selectedLabelStyle)
-    } else {
-      rowStyle = mergeStyles(styles.row, rowStyle)
-      checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle)
-      labelStyle = mergeStyles(styles.label, labelStyle)
+    if (!renderCustomCheckboxSource) {
+      if (row.selected) {
+        checkboxSource = selectedCheckboxSource
+        rowStyle = mergeStyles(styles.row, rowStyle, selectedRowStyle)
+        checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle, selectedCheckboxStyle)
+        labelStyle = mergeStyles(styles.label, labelStyle, selectedLabelStyle)
+      } else {
+        rowStyle = mergeStyles(styles.row, rowStyle)
+        checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle)
+        labelStyle = mergeStyles(styles.label, labelStyle)
+      }
     }
 
     return (
       <TouchableWithoutFeedback onPress={() => this.onRowPress(row)}>
         <View style={rowStyle}>
-          <Image style={checkboxStyle} source={checkboxSource} />
+          {renderCustomCheckboxSource 
+            ? renderCustomCheckboxSource(row.selected)
+            : <Image style={checkboxStyle} source={checkboxSource} />
+          }
           {this.renderLabel(row.label, labelStyle, row.selected)}
         </View>
       </TouchableWithoutFeedback>
