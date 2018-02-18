@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, ListView, Text, TouchableWithoutFeedback, Image } from 'react-native'
+import { View, FlatList, ListView, Text, TouchableWithoutFeedback, Image } from 'react-native'
 import styles from './SelectMultiple.styles'
 import checkbox from '../images/icon-checkbox.png'
 import checkboxChecked from '../images/icon-checkbox-checked.png'
@@ -58,17 +58,12 @@ export default class SelectMultiple extends Component {
 
     const rows = this.getRowData(props)
 
-    const dataSource = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1.value !== r2.value || r1.selected !== r2.selected
-    }).cloneWithRows(rows)
-
-    this.state = { dataSource }
+    this.state = { dataSource: rows }
   }
 
   componentWillReceiveProps (nextProps) {
     const rows = this.getRowData(nextProps)
-    const dataSource = this.state.dataSource.cloneWithRows(rows)
-    this.setState({ dataSource })
+    this.setState({ dataSource: rows });
   }
 
   getRowData ({ items, selectedItems }) {
@@ -107,11 +102,18 @@ export default class SelectMultiple extends Component {
     }
   }
 
+  keyExtractor = (item, index) => index
+
   render () {
     const { dataSource } = this.state
-    const { style, listViewProps } = this.props
-    const { renderItemRow } = this
-    return <ListView style={style} dataSource={dataSource} renderRow={renderItemRow} {...(listViewProps || {})} />
+    const { style, listViewProps, items } = this.props
+    return <FlatList
+        style={style}
+        keyExtractor={this.keyExtractor}
+        data={dataSource}
+        renderItem={this.renderItemRow}
+        {...listViewProps}
+      />
   }
 
   renderLabel = (label, style, selected) => {
@@ -138,7 +140,7 @@ export default class SelectMultiple extends Component {
       selectedLabelStyle
     } = this.props
 
-    if (row.selected) {
+    if (row.item.selected) {
       checkboxSource = selectedCheckboxSource
       rowStyle = mergeStyles(styles.row, rowStyle, selectedRowStyle)
       checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle, selectedCheckboxStyle)
@@ -150,10 +152,10 @@ export default class SelectMultiple extends Component {
     }
 
     return (
-      <TouchableWithoutFeedback onPress={() => this.onRowPress(row)}>
+      <TouchableWithoutFeedback onPress={() => this.onRowPress(row.item)}>
         <View style={rowStyle}>
           <Image style={checkboxStyle} source={checkboxSource} />
-          {this.renderLabel(row.label, labelStyle, row.selected)}
+          {this.renderLabel(row.item.label, labelStyle, row.item.selected)}
         </View>
       </TouchableWithoutFeedback>
     )
