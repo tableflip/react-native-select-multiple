@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { View, FlatList, ListView, Text, TouchableWithoutFeedback, Image } from 'react-native'
+import { View, FlatList, Text, TouchableWithoutFeedback, Image } from 'react-native'
 import styles from './SelectMultiple.styles'
 import checkbox from '../images/icon-checkbox.png'
 import checkboxChecked from '../images/icon-checkbox-checked.png'
@@ -19,18 +19,19 @@ const styleType = PropTypes.oneOfType([
 
 const sourceType = PropTypes.oneOfType([PropTypes.object, PropTypes.number])
 
-// A customiseable ListView that allows you to select multiple rows
+// A customiseable FlatList that allows you to select multiple rows
 export default class SelectMultiple extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(itemType).isRequired,
     selectedItems: PropTypes.arrayOf(itemType),
 
     onSelectionsChange: PropTypes.func.isRequired,
+    keyExtractor: PropTypes.func,
 
     checkboxSource: sourceType,
     selectedCheckboxSource: sourceType,
     renderLabel: PropTypes.func,
-    listViewProps: PropTypes.any,
+    FlatListProps: PropTypes.any,
     style: styleType,
     rowStyle: styleType,
     checkboxStyle: styleType,
@@ -56,9 +57,7 @@ export default class SelectMultiple extends Component {
   constructor (props) {
     super(props)
 
-    const rows = this.getRowData(props)
-
-    this.state = { dataSource: rows }
+    this.state = { dataSource: [] }
   }
 
   componentWillReceiveProps (nextProps) {
@@ -106,13 +105,13 @@ export default class SelectMultiple extends Component {
 
   render () {
     const { dataSource } = this.state
-    const { style, listViewProps, items } = this.props
+    const { style, flatListProps, items, keyExtractor } = this.props
     return <FlatList
         style={style}
-        keyExtractor={this.keyExtractor}
+        keyExtractor={keyExtractor || this.keyExtractor}
         data={dataSource}
         renderItem={this.renderItemRow}
-        {...listViewProps}
+        {...FlatListProps}
       />
   }
 

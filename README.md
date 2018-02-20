@@ -2,7 +2,7 @@
 
 [![dependencies Status](https://david-dm.org/tableflip/react-native-select-multiple/status.svg)](https://david-dm.org/tableflip/react-native-select-multiple)
 
-> A customiseable ListView that allows you to select multiple rows.
+> A customiseable FlatList that allows you to select multiple rows.
 
 ![select-multiple](https://cloud.githubusercontent.com/assets/152863/20929245/3569a3c6-bbc1-11e6-9d80-7f13e4c532c5.gif)
 
@@ -103,10 +103,11 @@ class App extends Component {
 | items | - | `array` | All items available in the list (array of `string` or `{ label, value }`) |
 | selectedItems | `[]` | `array` | The currently selected items (array of `string` or `{ label, value }`) |
 | onSelectionsChange | - | `func` | Callback called when a user selects or de-selects an item, passed `(selections, item)` |
+| keyExtractor | `index` | `func` | [keyExtractor](https://facebook.github.io/react-native/docs/flatlist.html#keyextractor) for the `FlatList` |
 | checkboxSource | [image](images/icon-checkbox.png) | `object` | [Image source](https://facebook.github.io/react-native/docs/image.html#source) for the checkbox (unchecked). |
 | selectedCheckboxSource | [image](images/icon-checkbox-checked.png) | `object` | [Image source](https://facebook.github.io/react-native/docs/image.html#source) for the checkbox (checked). |
-| listViewProps | {} | `object` | Additional props for the list view |
-| style | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/scrollview.html#style) for the `ListView` container. |
+| FlatListProps | {} | `object` | Additional props for the flat list |
+| style | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/scrollview.html#style) for the `FlatList` container. |
 | rowStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/view.html#style) for the row container. |
 | checkboxStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/image.html#style) for the checkbox image. |
 | labelStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/text.html#style) for the text label. |
