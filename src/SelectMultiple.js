@@ -115,52 +115,55 @@ export default class SelectMultiple extends Component {
     return <ListView style={style} dataSource={dataSource} renderRow={renderItemRow} {...(listViewProps || {})} />
   }
 
-  renderLabel = (label, style, selected) => {
+  renderLabel = (row) => {
+    const {labelStyle, selectedLabelStyle} = this.props
+    const labelStyleToRender = row.selected 
+      ? mergeStyles(styles.label, labelStyle, selectedLabelStyle) 
+      : mergeStyles(styles.label, labelStyle);
+
     if (this.props.renderLabel) {
-      return this.props.renderLabel(label, style, selected)
+      return this.props.renderLabel(row.label, labelStyleToRender, row.selected)
     }
     return (
-      <Text style={style}>{label}</Text>
+      <Text style={labelStyleToRender}>{row.label}</Text>
     )
   }
 
-  renderItemRow = (row) => {
-    let {
-      checkboxSource,
-      rowStyle,
-      labelStyle,
-      checkboxStyle
-    } = this.props
+  getCheckboxStyle = (row) => {
+    const {renderCheckbox, selectedCheckboxStyle, checkboxStyle} = this.props
 
-    const {
-      renderCheckbox,
-      selectedCheckboxSource,
-      selectedRowStyle,
-      selectedCheckboxStyle,
-      selectedLabelStyle
-    } = this.props
-
-    if (!renderCheckbox) {
-      if (row.selected) {
-        checkboxSource = selectedCheckboxSource
-        rowStyle = mergeStyles(styles.row, rowStyle, selectedRowStyle)
-        checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle, selectedCheckboxStyle)
-        labelStyle = mergeStyles(styles.label, labelStyle, selectedLabelStyle)
-      } else {
-        rowStyle = mergeStyles(styles.row, rowStyle)
-        checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle)
-        labelStyle = mergeStyles(styles.label, labelStyle)
-      }
+    if (row.selected) {
+      return mergeStyles(styles.checkbox, checkboxStyle, selectedCheckboxStyle)
+    } else {
+      return mergeStyles(styles.checkbox, checkboxStyle)
     }
+  }
+
+  getRowStyle = (row) => {
+    const {rowStyle, selectedRowStyle} = this.props;
+
+    if (row.selected) {
+      return mergeStyles(styles.row, rowStyle, selectedRowStyle)
+    } else {
+      return mergeStyles(styles.row, rowStyle)
+    }
+  }
+
+  renderItemRow = (row) => {
+    const {
+      checkboxSource,
+      renderCheckbox,
+      selectedCheckboxSource
+    } = this.props
 
     return (
       <TouchableWithoutFeedback onPress={() => this.onRowPress(row)}>
-        <View style={rowStyle}>
+        <View style={this.getRowStyle(row)}>
           {renderCheckbox 
             ? renderCheckbox(row.selected)
-            : <Image style={checkboxStyle} source={checkboxSource} />
+            : <Image style={this.getCheckboxStyle(row)} source={row.selected ? selectedCheckboxSource : checkboxSource} />
           }
-          {this.renderLabel(row.label, labelStyle, row.selected)}
+          {this.renderLabel(row)}
         </View>
       </TouchableWithoutFeedback>
     )
