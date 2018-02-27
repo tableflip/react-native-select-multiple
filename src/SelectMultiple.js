@@ -28,7 +28,7 @@ export default class SelectMultiple extends Component {
     onSelectionsChange: PropTypes.func.isRequired,
 
     checkboxSource: sourceType,
-    renderCustomCheckboxSource: PropTypes.func,
+    renderCheckbox: PropTypes.func,
     selectedCheckboxSource: sourceType,
     renderLabel: PropTypes.func,
     listViewProps: PropTypes.any,
@@ -133,14 +133,14 @@ export default class SelectMultiple extends Component {
     } = this.props
 
     const {
-      renderCustomCheckboxSource,
+      renderCheckbox,
       selectedCheckboxSource,
       selectedRowStyle,
       selectedCheckboxStyle,
       selectedLabelStyle
     } = this.props
 
-    if (!renderCustomCheckboxSource) {
+    if (!renderCheckbox) {
       if (row.selected) {
         checkboxSource = selectedCheckboxSource
         rowStyle = mergeStyles(styles.row, rowStyle, selectedRowStyle)
@@ -156,8 +156,8 @@ export default class SelectMultiple extends Component {
     return (
       <TouchableWithoutFeedback onPress={() => this.onRowPress(row)}>
         <View style={rowStyle}>
-          {renderCustomCheckboxSource 
-            ? renderCustomCheckboxSource(row.selected)
+          {renderCheckbox 
+            ? renderCheckbox(row.selected)
             : <Image style={checkboxStyle} source={checkboxSource} />
           }
           {this.renderLabel(row.label, labelStyle, row.selected)}
