@@ -31,7 +31,7 @@ export default class SelectMultiple extends Component {
     checkboxSource: sourceType,
     selectedCheckboxSource: sourceType,
     renderLabel: PropTypes.func,
-    FlatListProps: PropTypes.any,
+    flatListProps: PropTypes.any,
     style: styleType,
     rowStyle: styleType,
     checkboxStyle: styleType,
@@ -111,7 +111,7 @@ export default class SelectMultiple extends Component {
         keyExtractor={keyExtractor || this.keyExtractor}
         data={dataSource}
         renderItem={this.renderItemRow}
-        {...FlatListProps}
+        {...flatListProps}
       />
   }
 
