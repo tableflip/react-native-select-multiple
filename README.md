@@ -46,6 +46,8 @@ class App extends Component {
     )
   }
 }
+export default App
+
 ```
 
 ## Customize label
