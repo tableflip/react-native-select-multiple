@@ -24,7 +24,7 @@ export default class SelectMultiple extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(itemType).isRequired,
     selectedItems: PropTypes.arrayOf(itemType),
-
+    maxSelect:PropTypes.number,
     onSelectionsChange: PropTypes.func.isRequired,
 
     checkboxSource: sourceType,
@@ -48,6 +48,7 @@ export default class SelectMultiple extends Component {
     checkboxStyle: {},
     checkboxCheckedStyle: {},
     labelStyle: {},
+    maxSelect:null,
     checkboxSource: checkbox,
     selectedCheckboxSource: checkboxChecked,
     renderLabel: null
@@ -95,6 +96,10 @@ export default class SelectMultiple extends Component {
     } else {
       selectedItems = selectedItems.concat({ label, value })
     }
+    if(selectedItems.length>this.props.maxSelect && this.props.maxSelect!=null){
+  selectedItems.pop();
+
+  }
 
     this.props.onSelectionsChange(selectedItems, { label, value })
   }
