@@ -62,7 +62,7 @@ export default class SelectMultiple extends Component {
 
   componentWillReceiveProps (nextProps) {
     const rows = this.getRowData(nextProps)
-    this.setState({ dataSource: rows });
+    this.setState({ dataSource: rows })
   }
 
   getRowData ({ items, selectedItems }) {
@@ -105,14 +105,14 @@ export default class SelectMultiple extends Component {
 
   render () {
     const { dataSource } = this.state
-    const { style, flatListProps, items, keyExtractor } = this.props
+    const { style, flatListProps, keyExtractor } = this.props
     return <FlatList
-        style={style}
-        keyExtractor={keyExtractor || this.keyExtractor}
-        data={dataSource}
-        renderItem={this.renderItemRow}
-        {...flatListProps}
-      />
+      style={style}
+      keyExtractor={keyExtractor || this.keyExtractor}
+      data={dataSource}
+      renderItem={this.renderItemRow}
+      {...flatListProps}
+    />
   }
 
   renderLabel = (label, style, selected) => {
