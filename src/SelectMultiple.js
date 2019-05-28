@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import isEqual from 'lodash.isequal'
 import PropTypes from 'prop-types'
 import { View, FlatList, Text, TouchableWithoutFeedback, Image } from 'react-native'
 import styles from './SelectMultiple.styles'
@@ -60,9 +61,17 @@ export default class SelectMultiple extends Component {
     this.state = { dataSource: [] }
   }
 
-  componentWillReceiveProps (nextProps) {
-    const rows = this.getRowData(nextProps)
-    this.setState({ dataSource: rows })
+  static getDerivedStateFromProps(props, state) {
+    if (
+      !isEqual(props.items, state.items)
+      || !isEqual(props.selectedItems, state.selectedItems)
+    ) {
+      return {
+        items: props.items,
+        selectedItems: props.selectedItems
+      };
+    }
+    return null;
   }
 
   getRowData ({ items, selectedItems }) {
@@ -101,11 +110,11 @@ export default class SelectMultiple extends Component {
     }
   }
 
-  keyExtractor = (item, index) => index
+  keyExtractor = (item, index) => index.toString()
 
   render () {
-    const { dataSource } = this.state
-    const { style, flatListProps, keyExtractor } = this.props
+    const dataSource = this.getRowData(this.state);
+    const { style, flatListProps, keyExtractor } = this.props;
     return <FlatList
       style={style}
       keyExtractor={keyExtractor || this.keyExtractor}
