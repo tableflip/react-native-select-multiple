@@ -59,7 +59,10 @@ export default class SelectMultiple extends Component {
 
     this.state = { dataSource: [] }
   }
-
+  componentDidMount() {
+    const rows = this.getRowData(this.props);
+    this.setState({ dataSource: rows });
+  }
   componentWillReceiveProps (nextProps) {
     const rows = this.getRowData(nextProps)
     this.setState({ dataSource: rows })
@@ -101,7 +104,7 @@ export default class SelectMultiple extends Component {
     }
   }
 
-  keyExtractor = (item, index) => index
+  keyExtractor = (item, index) => index.toString()
 
   render () {
     const { dataSource } = this.state
