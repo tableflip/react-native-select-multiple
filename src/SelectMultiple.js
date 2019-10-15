@@ -59,10 +59,12 @@ export default class SelectMultiple extends Component {
 
     this.state = { dataSource: [] }
   }
-  componentDidMount() {
-    const rows = this.getRowData(this.props);
-    this.setState({ dataSource: rows });
+
+  componentDidMount () {
+    const rows = this.getRowData(this.props)
+    this.setState({ dataSource: rows })
   }
+
   componentWillReceiveProps (nextProps) {
     const rows = this.getRowData(nextProps)
     this.setState({ dataSource: rows })
@@ -109,13 +111,15 @@ export default class SelectMultiple extends Component {
   render () {
     const { dataSource } = this.state
     const { style, flatListProps, keyExtractor } = this.props
-    return <FlatList
-      style={style}
-      keyExtractor={keyExtractor || this.keyExtractor}
-      data={dataSource}
-      renderItem={this.renderItemRow}
-      {...flatListProps}
-    />
+    return (
+      <FlatList
+        style={style}
+        keyExtractor={keyExtractor || this.keyExtractor}
+        data={dataSource}
+        renderItem={this.renderItemRow}
+        {...flatListProps}
+      />
+    )
   }
 
   renderLabel = (label, style, selected) => {
