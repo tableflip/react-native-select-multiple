@@ -94,12 +94,18 @@ export default class SelectMultiple extends Component {
     if (index > -1) {
       selectedItems = selectedItems.filter((selectedItem) => selectedItem.value !== value)
     } else {
-      selectedItems = selectedItems.concat({ label, value })
+      if(this.props.maxSelect!=null){
+        if(selectedItems.length<this.props.maxSelect){
+          selectedItems = selectedItems.concat({ label, value })
+        }
+        else{
+          return;
+        }
+      }
+      else{
+        selectedItems = selectedItems.concat({ label, value })
+      }
     }
-    if(selectedItems.length>this.props.maxSelect && this.props.maxSelect!=null){
-  selectedItems.pop();
-
-  }
 
     this.props.onSelectionsChange(selectedItems, { label, value })
   }
