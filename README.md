@@ -116,6 +116,7 @@ class App extends Component {
 | selectedCheckboxStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/image.html#style) for the checkbox image when selected. |
 | selectedLabelStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/text.html#style) for the text label when selected. |
 | renderLabel | null | `func` | Function for render label. |
+| maxSelect | null | `int` | Maximum number of selected items|
 
 ## Contribute
 
