@@ -1,6 +1,8 @@
 # react-native-select-multiple
 
+[![Build Status](https://travis-ci.org/tableflip/react-native-select-multiple.svg?branch=master)](https://travis-ci.org/tableflip/react-native-select-multiple)
 [![dependencies Status](https://david-dm.org/tableflip/react-native-select-multiple/status.svg)](https://david-dm.org/tableflip/react-native-select-multiple)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 > A customiseable FlatList that allows you to select multiple rows.
 
@@ -130,5 +132,3 @@ Feel free to dive in! [Open an issue](https://github.com/tableflip/react-native-
 ----
 
 A [(╯°□°）╯︵TABLEFLIP](https://tableflip.io) side project.
-
-[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
