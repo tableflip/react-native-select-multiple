@@ -24,7 +24,7 @@ export default class SelectMultiple extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(itemType).isRequired,
     selectedItems: PropTypes.arrayOf(itemType),
-    maxSelect:PropTypes.number,
+    maxSelect: PropTypes.number,
     onSelectionsChange: PropTypes.func.isRequired,
     keyExtractor: PropTypes.func,
 
@@ -49,7 +49,7 @@ export default class SelectMultiple extends Component {
     checkboxStyle: {},
     checkboxCheckedStyle: {},
     labelStyle: {},
-    maxSelect:null,
+    maxSelect: null,
     checkboxSource: checkbox,
     selectedCheckboxSource: checkboxChecked,
     renderLabel: null
@@ -57,7 +57,6 @@ export default class SelectMultiple extends Component {
 
   constructor (props) {
     super(props)
-
     this.state = { dataSource: [] }
   }
 
@@ -84,7 +83,7 @@ export default class SelectMultiple extends Component {
 
   onRowPress (row) {
     const { label, value } = row
-    let { selectedItems } = this.props
+    let { selectedItems, maxSelect } = this.props
 
     selectedItems = (selectedItems || []).map(this.toLabelValueObject)
 
@@ -93,15 +92,9 @@ export default class SelectMultiple extends Component {
     if (index > -1) {
       selectedItems = selectedItems.filter((selectedItem) => selectedItem.value !== value)
     } else {
-      if(this.props.maxSelect!=null){
-        if(selectedItems.length<this.props.maxSelect){
-          selectedItems = selectedItems.concat({ label, value })
-        }
-        else{
-          return;
-        }
-      }
-      else{
+      if (maxSelect != null && selectedItems.length >= maxSelect) {
+        return
+      } else {
         selectedItems = selectedItems.concat({ label, value })
       }
     }
