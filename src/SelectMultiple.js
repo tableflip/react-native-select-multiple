@@ -4,7 +4,7 @@ import { View, FlatList, Text, TouchableWithoutFeedback, Image } from 'react-nat
 import styles from './SelectMultiple.styles'
 import checkbox from '../images/icon-checkbox.png'
 import checkboxChecked from '../images/icon-checkbox-checked.png'
-import { mergeStyles } from './style'
+import { mergeStyles } from './style';
 
 const itemType = PropTypes.oneOfType([
   PropTypes.string,
@@ -24,19 +24,17 @@ export default class SelectMultiple extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(itemType).isRequired,
     selectedItems: PropTypes.arrayOf(itemType),
-    maxSelect: PropTypes.number,
+
     onSelectionsChange: PropTypes.func.isRequired,
     keyExtractor: PropTypes.func,
 
     checkboxSource: sourceType,
     selectedCheckboxSource: sourceType,
     renderLabel: PropTypes.func,
-    flatListProps: PropTypes.any,
     style: styleType,
     rowStyle: styleType,
     checkboxStyle: styleType,
     labelStyle: styleType,
-
     selectedRowStyle: styleType,
     selectedCheckboxStyle: styleType,
     selectedLabelStyle: styleType
@@ -49,25 +47,9 @@ export default class SelectMultiple extends Component {
     checkboxStyle: {},
     checkboxCheckedStyle: {},
     labelStyle: {},
-    maxSelect: null,
     checkboxSource: checkbox,
     selectedCheckboxSource: checkboxChecked,
     renderLabel: null
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = { dataSource: [] }
-  }
-
-  componentDidMount () {
-    const rows = this.getRowData(this.props)
-    this.setState({ dataSource: rows })
-  }
-
-  componentWillReceiveProps (nextProps) {
-    const rows = this.getRowData(nextProps)
-    this.setState({ dataSource: rows })
   }
 
   getRowData ({ items, selectedItems }) {
@@ -83,7 +65,7 @@ export default class SelectMultiple extends Component {
 
   onRowPress (row) {
     const { label, value } = row
-    let { selectedItems, maxSelect } = this.props
+    let { selectedItems } = this.props
 
     selectedItems = (selectedItems || []).map(this.toLabelValueObject)
 
@@ -92,11 +74,7 @@ export default class SelectMultiple extends Component {
     if (index > -1) {
       selectedItems = selectedItems.filter((selectedItem) => selectedItem.value !== value)
     } else {
-      if (maxSelect != null && selectedItems.length >= maxSelect) {
-        return
-      } else {
-        selectedItems = selectedItems.concat({ label, value })
-      }
+      selectedItems = selectedItems.concat({ label, value })
     }
 
     this.props.onSelectionsChange(selectedItems, { label, value })
@@ -110,21 +88,7 @@ export default class SelectMultiple extends Component {
     }
   }
 
-  keyExtractor = (item, index) => index.toString()
-
-  render () {
-    const { dataSource } = this.state
-    const { style, flatListProps, keyExtractor } = this.props
-    return (
-      <FlatList
-        style={style}
-        keyExtractor={keyExtractor || this.keyExtractor}
-        data={dataSource}
-        renderItem={this.renderItemRow}
-        {...flatListProps}
-      />
-    )
-  }
+  keyExtractor = (item, index) => index
 
   renderLabel = (label, style, selected) => {
     if (this.props.renderLabel) {
@@ -169,5 +133,16 @@ export default class SelectMultiple extends Component {
         </View>
       </TouchableWithoutFeedback>
     )
+  }
+
+  render () {
+    const { style, keyExtractor } = this.props
+    const dataSource = this.getRowData(this.props)
+    return <FlatList
+      style={style}
+      keyExtractor={keyExtractor || this.keyExtractor}
+      data={dataSource}
+      renderItem={this.renderItemRow}
+    />
   }
 }
