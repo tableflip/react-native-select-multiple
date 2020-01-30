@@ -55,30 +55,23 @@ export default class SelectMultiple extends Component {
     renderLabel: null
   }
 
-  constructor (props) {
-    super(props)
-    this.state = { dataSource: [] }
-  }
+  items = undefined
+  selectedItems = undefined
+  rowData = []
 
-  componentDidMount () {
-    const rows = this.getRowData(this.props)
-    this.setState({ dataSource: rows })
-  }
+  getRowData (items, selectedItems) {
+    if (items !== this.items || selectedItems !== this.selectedItems) {
+      this.items = items
+      this.selectedItems = selectedItems
+      this.rowData = items.map(this.toLabelValueObject)
+      selectedItems = (selectedItems || []).map(this.toLabelValueObject)
 
-  componentWillReceiveProps (nextProps) {
-    const rows = this.getRowData(nextProps)
-    this.setState({ dataSource: rows })
-  }
+      this.rowData.forEach((item) => {
+        item.selected = selectedItems.some((i) => i.value === item.value)
+      })
+    }
 
-  getRowData ({ items, selectedItems }) {
-    items = items.map(this.toLabelValueObject)
-    selectedItems = (selectedItems || []).map(this.toLabelValueObject)
-
-    items.forEach((item) => {
-      item.selected = selectedItems.some((i) => i.value === item.value)
-    })
-
-    return items
+    return this.rowData
   }
 
   onRowPress (row) {
@@ -113,8 +106,8 @@ export default class SelectMultiple extends Component {
   keyExtractor = (item, index) => index.toString()
 
   render () {
-    const { dataSource } = this.state
-    const { style, flatListProps, keyExtractor } = this.props
+    const { style, flatListProps, keyExtractor, items, selectedItems } = this.props
+    const dataSource = this.getRowData(items, selectedItems)
     return (
       <FlatList
         style={style}
