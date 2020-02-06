@@ -4,11 +4,12 @@ import { View, FlatList, Text, TouchableWithoutFeedback, Image } from 'react-nat
 import styles from './SelectMultiple.styles'
 import checkbox from '../images/icon-checkbox.png'
 import checkboxChecked from '../images/icon-checkbox-checked.png'
+import checkboxDisabled from '../images/icon-checkbox-disabled.png'
 import { mergeStyles } from './style'
 
 const itemType = PropTypes.oneOfType([
   PropTypes.string,
-  PropTypes.shape({ label: PropTypes.any, value: PropTypes.any })
+  PropTypes.shape({ label: PropTypes.any, value: PropTypes.any, disable: PropTypes.any  })
 ])
 
 const styleType = PropTypes.oneOfType([
@@ -30,6 +31,7 @@ export default class SelectMultiple extends Component {
 
     checkboxSource: sourceType,
     selectedCheckboxSource: sourceType,
+    disabledCheckboxSource: sourceType,
     renderLabel: PropTypes.func,
     flatListProps: PropTypes.any,
     style: styleType,
@@ -39,7 +41,11 @@ export default class SelectMultiple extends Component {
 
     selectedRowStyle: styleType,
     selectedCheckboxStyle: styleType,
-    selectedLabelStyle: styleType
+    selectedLabelStyle: styleType,
+
+    disabledRowStyle: styleType,
+    disabledCheckboxStyle: styleType,
+    disabledLabelStyle: styleType
   }
 
   static defaultProps = {
@@ -52,6 +58,7 @@ export default class SelectMultiple extends Component {
     maxSelect: null,
     checkboxSource: checkbox,
     selectedCheckboxSource: checkboxChecked,
+    disabledCheckboxSource: checkboxDisabled,
     renderLabel: null
   }
 
@@ -104,9 +111,9 @@ export default class SelectMultiple extends Component {
 
   toLabelValueObject (obj) {
     if (Object.prototype.toString.call(obj) === '[object String]') {
-      return { label: obj, value: obj }
+      return { label: obj, value: obj, disable: false }
     } else {
-      return { label: obj.label, value: obj.value }
+      return { label: obj.label, value: obj.value, disable: obj.disable }
     }
   }
 
@@ -147,7 +154,11 @@ export default class SelectMultiple extends Component {
       selectedCheckboxSource,
       selectedRowStyle,
       selectedCheckboxStyle,
-      selectedLabelStyle
+      selectedLabelStyle,
+      disabledCheckboxSource,
+      disabledRowStyle,
+      disabledCheckboxStyle,
+      disabledLabelStyle
     } = this.props
 
     if (row.item.selected) {
@@ -155,6 +166,11 @@ export default class SelectMultiple extends Component {
       rowStyle = mergeStyles(styles.row, rowStyle, selectedRowStyle)
       checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle, selectedCheckboxStyle)
       labelStyle = mergeStyles(styles.label, labelStyle, selectedLabelStyle)
+    } else if (row.item.disable) {
+      checkboxSource = disabledCheckboxSource
+      rowStyle = mergeStyles(styles.row, rowStyle, disabledRowStyle)
+      checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle, disabledCheckboxStyle)
+      labelStyle = mergeStyles(styles.label, labelStyle, disabledLabelStyle)
     } else {
       rowStyle = mergeStyles(styles.row, rowStyle)
       checkboxStyle = mergeStyles(styles.checkbox, checkboxStyle)
@@ -162,7 +178,7 @@ export default class SelectMultiple extends Component {
     }
 
     return (
-      <TouchableWithoutFeedback onPress={() => this.onRowPress(row.item)}>
+      <TouchableWithoutFeedback onPress={() => this.onRowPress(row.item)} disabled={row.item.disable}>
         <View style={rowStyle}>
           <Image style={checkboxStyle} source={checkboxSource} />
           {this.renderLabel(row.item.label, labelStyle, row.item.selected)}

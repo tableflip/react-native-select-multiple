@@ -24,9 +24,9 @@ import SelectMultiple from 'react-native-select-multiple'
 const fruits = ['Apples', 'Oranges', 'Pears']
 // --- OR ---
 // const fruits = [
-//   { label: 'Apples', value: 'appls' },
-//   { label: 'Oranges', value: 'orngs' },
-//   { label: 'Pears', value: 'pears' }
+//   { label: 'Apples', value: 'appls', disable: false },
+//   { label: 'Oranges', value: 'orngs', disable: true },
+//   { label: 'Pears', value: 'pears', disable: false }
 // ]
 
 class App extends Component {
@@ -62,9 +62,9 @@ import SelectMultiple from 'react-native-select-multiple'
 const fruits = ['Apples', 'Oranges', 'Pears']
 // --- OR ---
 // const fruits = [
-//   { label: 'Apples', value: 'appls' },
-//   { label: 'Oranges', value: 'orngs' },
-//   { label: 'Pears', value: 'pears' }
+//   { label: 'Apples', value: 'appls', disable: false },
+//   { label: 'Oranges', value: 'orngs', disable: true },
+//   { label: 'Pears', value: 'pears', disable: false }
 // ]
 
 const renderLabel = (label, style) => {
@@ -110,6 +110,7 @@ class App extends Component {
 | keyExtractor | `index` | `func` | [keyExtractor](https://facebook.github.io/react-native/docs/flatlist.html#keyextractor) for the `FlatList` |
 | checkboxSource | [image](images/icon-checkbox.png) | `object` | [Image source](https://facebook.github.io/react-native/docs/image.html#source) for the checkbox (unchecked). |
 | selectedCheckboxSource | [image](images/icon-checkbox-checked.png) | `object` | [Image source](https://facebook.github.io/react-native/docs/image.html#source) for the checkbox (checked). |
+| disabledCheckboxSource | [image](images/icon-checkbox-disabled.png) | `object` | [Image source](https://facebook.github.io/react-native/docs/image.html#source) for the checkbox (disabled). |
 | flatListProps | {} | `object` | Additional props for the flat list |
 | style | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/scrollview.html#style) for the `FlatList` container. |
 | rowStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/view.html#style) for the row container. |
@@ -118,6 +119,9 @@ class App extends Component {
 | selectedRowStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/view.html#style) for the row container when selected. |
 | selectedCheckboxStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/image.html#style) for the checkbox image when selected. |
 | selectedLabelStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/text.html#style) for the text label when selected. |
+| disabledRowStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/view.html#style) for the row container when disabled. |
+| disabledCheckboxStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/image.html#style) for the checkbox image when disabled. |
+| disabledLabelStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/text.html#style) for the text label when disabled. |
 | renderLabel | null | `func` | Function for render label. |
 | maxSelect | null | `int` | Maximum number of selected items|
 
