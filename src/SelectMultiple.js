@@ -9,7 +9,7 @@ import { mergeStyles } from './style'
 
 const itemType = PropTypes.oneOfType([
   PropTypes.string,
-  PropTypes.shape({ label: PropTypes.any, value: PropTypes.any, disable: PropTypes.any  })
+  PropTypes.shape({ label: PropTypes.any, value: PropTypes.any, disable: PropTypes.any })
 ])
 
 const styleType = PropTypes.oneOfType([
