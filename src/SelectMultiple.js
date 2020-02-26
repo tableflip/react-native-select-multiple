@@ -19,7 +19,7 @@ const styleType = PropTypes.oneOfType([
 
 const sourceType = PropTypes.oneOfType([PropTypes.object, PropTypes.number])
 
-// A customiseable FlatList that allows you to select multiple rows
+// A customizable FlatList that allows you to select multiple rows
 export default class SelectMultiple extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(itemType).isRequired,
