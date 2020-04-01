@@ -19,7 +19,7 @@ const styleType = PropTypes.oneOfType([
 
 const sourceType = PropTypes.oneOfType([PropTypes.object, PropTypes.number])
 
-// A customizable FlatList that allows you to select multiple rows
+// A customiseable FlatList that allows you to select multiple rows
 export default class SelectMultiple extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(itemType).isRequired,
@@ -39,7 +39,10 @@ export default class SelectMultiple extends Component {
 
     selectedRowStyle: styleType,
     selectedCheckboxStyle: styleType,
-    selectedLabelStyle: styleType
+    selectedLabelStyle: styleType,
+
+    maxFontSizeMultiplier: PropTypes.number,
+    allowFontScaling: PropTypes.bool
   }
 
   static defaultProps = {
@@ -52,7 +55,9 @@ export default class SelectMultiple extends Component {
     maxSelect: null,
     checkboxSource: checkbox,
     selectedCheckboxSource: checkboxChecked,
-    renderLabel: null
+    renderLabel: null,
+    maxFontSizeMultiplier: 0,
+    allowFontScaling: true
   }
 
   constructor (props) {
@@ -131,7 +136,7 @@ export default class SelectMultiple extends Component {
       return this.props.renderLabel(label, style, selected)
     }
     return (
-      <Text style={style}>{label}</Text>
+      <Text maxFontSizeMultiplier={this.props.maxFontSizeMultiplier} allowFontScaling={this.props.allowFontScaling} style={style}>{label}</Text>
     )
   }
 
