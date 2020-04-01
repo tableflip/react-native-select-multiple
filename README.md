@@ -120,7 +120,7 @@ class App extends Component {
 | selectedLabelStyle | [default styles](src/SelectMultiple.styles.js) | `object` | [Style](https://facebook.github.io/react-native/docs/text.html#style) for the text label when selected. |
 | renderLabel | null | `func` | Function for render label. |
 | maxSelect | null | `int` | Maximum number of selected items|
-| maxFontSizeMultiplier | 0 | `int` | [maxFontSizeMultiplier](https://reactnative.dev/docs/text#maxfontsizemultiplier) for the `Text`. |
+| maxFontSizeMultiplier | 0 | `number` | [maxFontSizeMultiplier](https://reactnative.dev/docs/text#maxfontsizemultiplier) for the `Text`. |
 | allowFontScaling | true | `bool` | [allowFontScaling](https://reactnative.dev/docs/text#allowfontscaling) for the `Text`. |
 
 ## Contribute
