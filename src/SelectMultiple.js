@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import isEqual from 'lodash.isequal'
 import PropTypes from 'prop-types'
 import { View, FlatList, Text, TouchableWithoutFeedback, Image } from 'react-native'
 import styles from './SelectMultiple.styles'
@@ -24,7 +25,7 @@ export default class SelectMultiple extends Component {
   static propTypes = {
     items: PropTypes.arrayOf(itemType).isRequired,
     selectedItems: PropTypes.arrayOf(itemType),
-    maxSelect: PropTypes.number,
+
     onSelectionsChange: PropTypes.func.isRequired,
     keyExtractor: PropTypes.func,
 
@@ -49,7 +50,6 @@ export default class SelectMultiple extends Component {
     checkboxStyle: {},
     checkboxCheckedStyle: {},
     labelStyle: {},
-    maxSelect: null,
     checkboxSource: checkbox,
     selectedCheckboxSource: checkboxChecked,
     renderLabel: null
@@ -57,17 +57,20 @@ export default class SelectMultiple extends Component {
 
   constructor (props) {
     super(props)
+
     this.state = { dataSource: [] }
   }
 
-  componentDidMount () {
-    const rows = this.getRowData(this.props)
-    this.setState({ dataSource: rows })
-  }
-
-  componentWillReceiveProps (nextProps) {
-    const rows = this.getRowData(nextProps)
-    this.setState({ dataSource: rows })
+  static getDerivedStateFromProps (props, state) {
+    if (
+      !isEqual(props.items, state.items) || !isEqual(props.selectedItems, state.selectedItems)
+    ) {
+      return {
+        items: props.items,
+        selectedItems: props.selectedItems
+      }
+    }
+    return null
   }
 
   getRowData ({ items, selectedItems }) {
@@ -83,7 +86,7 @@ export default class SelectMultiple extends Component {
 
   onRowPress (row) {
     const { label, value } = row
-    let { selectedItems, maxSelect } = this.props
+    let { selectedItems } = this.props
 
     selectedItems = (selectedItems || []).map(this.toLabelValueObject)
 
@@ -92,11 +95,7 @@ export default class SelectMultiple extends Component {
     if (index > -1) {
       selectedItems = selectedItems.filter((selectedItem) => selectedItem.value !== value)
     } else {
-      if (maxSelect != null && selectedItems.length >= maxSelect) {
-        return
-      } else {
-        selectedItems = selectedItems.concat({ label, value })
-      }
+      selectedItems = selectedItems.concat({ label, value })
     }
 
     this.props.onSelectionsChange(selectedItems, { label, value })
@@ -113,7 +112,7 @@ export default class SelectMultiple extends Component {
   keyExtractor = (item, index) => index.toString()
 
   render () {
-    const { dataSource } = this.state
+    const dataSource = this.getRowData(this.state)
     const { style, flatListProps, keyExtractor } = this.props
     return (
       <FlatList

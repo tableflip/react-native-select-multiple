@@ -26,7 +26,8 @@
   },
   "homepage": "https://github.com/tableflip/react-native-select-multiple#readme",
   "dependencies": {
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.7.2",
+    "lodash.isequal": "^4.5.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
