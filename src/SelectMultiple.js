@@ -93,7 +93,12 @@ export default class SelectMultiple extends Component {
       selectedItems = selectedItems.filter((selectedItem) => selectedItem.value !== value)
     } else {
       if (maxSelect != null && selectedItems.length >= maxSelect) {
-        return
+        if (maxSelect === 1) {
+          selectedItems = [{label, value}];
+        }
+        else {
+          return;
+        }
       } else {
         selectedItems = selectedItems.concat({ label, value })
       }
